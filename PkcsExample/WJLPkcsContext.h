@@ -23,11 +23,12 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import "WJLAppDelegate.h"
+@interface WJLPkcsContext : NSObject
 
-int main(int argc, char * argv[])
-{
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([WJLAppDelegate class]));
-    }
-}
+@property (readonly, assign) SecKeyRef publicKey;
+
+- (NSData *)encrypt:(NSData *)plainText forRecipient:(WJLPkcsContext *)recipient;
+
+- (NSData *)decrypt:(NSData *)cipherText;
+
+@end

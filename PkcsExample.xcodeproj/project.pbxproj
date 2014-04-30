@@ -19,6 +19,8 @@
 		2DC9BA1F191147570015C22E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2DC9BA07191147570015C22E /* UIKit.framework */; };
 		2DC9BA27191147570015C22E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2DC9BA25191147570015C22E /* InfoPlist.strings */; };
 		2DC9BA29191147570015C22E /* PkcsExampleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC9BA28191147570015C22E /* PkcsExampleTests.m */; };
+		2DC9BA34191147760015C22E /* WJLPkcsContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DC9BA33191147760015C22E /* WJLPkcsContext.m */; };
+		2DEA8A9F1911584C0046AE1D /* NSData+DebugOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 2DEA8A9E1911584C0046AE1D /* NSData+DebugOutput.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,10 @@
 		2DC9BA24191147570015C22E /* PkcsExampleTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "PkcsExampleTests-Info.plist"; sourceTree = "<group>"; };
 		2DC9BA26191147570015C22E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		2DC9BA28191147570015C22E /* PkcsExampleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PkcsExampleTests.m; sourceTree = "<group>"; };
+		2DC9BA32191147760015C22E /* WJLPkcsContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJLPkcsContext.h; sourceTree = "<group>"; };
+		2DC9BA33191147760015C22E /* WJLPkcsContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJLPkcsContext.m; sourceTree = "<group>"; };
+		2DEA8A9D1911584C0046AE1D /* NSData+DebugOutput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+DebugOutput.h"; sourceTree = "<group>"; };
+		2DEA8A9E1911584C0046AE1D /* NSData+DebugOutput.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+DebugOutput.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,10 @@
 				2DC9BA13191147570015C22E /* WJLAppDelegate.m */,
 				2DC9BA15191147570015C22E /* Images.xcassets */,
 				2DC9BA0A191147570015C22E /* Supporting Files */,
+				2DC9BA32191147760015C22E /* WJLPkcsContext.h */,
+				2DC9BA33191147760015C22E /* WJLPkcsContext.m */,
+				2DEA8A9D1911584C0046AE1D /* NSData+DebugOutput.h */,
+				2DEA8A9E1911584C0046AE1D /* NSData+DebugOutput.m */,
 			);
 			path = PkcsExample;
 			sourceTree = "<group>";
@@ -241,6 +251,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2DC9BA14191147570015C22E /* WJLAppDelegate.m in Sources */,
+				2DEA8A9F1911584C0046AE1D /* NSData+DebugOutput.m in Sources */,
+				2DC9BA34191147760015C22E /* WJLPkcsContext.m in Sources */,
 				2DC9BA10191147570015C22E /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -438,6 +450,7 @@
 				2DC9BA2E191147570015C22E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		2DC9BA2F191147570015C22E /* Build configuration list for PBXNativeTarget "PkcsExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -446,6 +459,7 @@
 				2DC9BA31191147570015C22E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

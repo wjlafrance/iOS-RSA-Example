@@ -1,12 +1,31 @@
+// Copyright (c) 2014, William LaFrance.
+// All rights reserved.
 //
-//  WJLAppDelegate.m
-//  PkcsExample
+// Redistribution and use in source and binary forms, with or without
+// modification, are permitted provided that the following conditions are met:
+//   * Redistributions of source code must retain the above copyright
+//     notice, this list of conditions and the following disclaimer.
+//   * Redistributions in binary form must reproduce the above copyright
+//     notice, this list of conditions and the following disclaimer in the
+//     documentation and/or other materials provided with the distribution.
+//   * Neither the name of the copyright holder nor the
+//     names of its contributors may be used to endorse or promote products
+//     derived from this software without specific prior written permission.
 //
-//  Created by William LaFrance on 4/30/14.
-//  Copyright (c) 2014 William LaFrance. All rights reserved.
-//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+// ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+// WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+// DISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDER BE LIABLE FOR ANY
+// DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+// (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+// LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+// ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+// SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #import "WJLAppDelegate.h"
+#import "WJLPkcsContext.h"
+#import "NSData+DebugOutput.h"
 
 @implementation WJLAppDelegate
 
@@ -16,34 +35,38 @@
     // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+
+    //
+
+    WJLPkcsContext *client = [[WJLPkcsContext alloc] init];
+    WJLPkcsContext *server = [[WJLPkcsContext alloc] init];
+
+    // Client crafts a message
+    NSString *clientPlainText = @"Hello";
+
+    // Encrypt client's plaintext using server's public key
+    NSData *clientCipherText = [client encrypt:[clientPlainText dataUsingEncoding:NSUTF8StringEncoding] forRecipient:server];
+    NSLog(@"%@", [clientCipherText debugOutput]);
+
+    // Server receives and decrypts client's message using server's private key
+    NSString *serverDecrypted = [[NSString alloc] initWithData:[server decrypt:clientCipherText] encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", serverDecrypted);
+
+    NSAssert([serverDecrypted isEqualToString:clientPlainText], @"Server's decrypted text must exactly match client's plaintext");
+
+    // Server crafts a response
+    NSString *serverPlaintext = [NSString stringWithFormat:@"Hello client! To prove I could decrypt your message, I'll repeat it for you:\n\n%@", serverDecrypted];
+
+    // Encrypt server's plaintext with client's public key
+    NSData *serverCipherText = [server encrypt:[serverPlaintext dataUsingEncoding:NSUTF8StringEncoding] forRecipient:client];
+    NSLog(@"%@", [serverCipherText debugOutput]);
+
+    NSString *clientDecrypted = [[NSString alloc] initWithData:[client decrypt:serverCipherText] encoding:NSUTF8StringEncoding];
+    NSLog(@"%@", clientDecrypted);
+
+    NSAssert([clientDecrypted isEqualToString:serverPlaintext], @"Client's decrypted text must exactly match server's plaintext");
+
     return YES;
-}
-
-- (void)applicationWillResignActive:(UIApplication *)application
-{
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
-}
-
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
-}
-
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
-}
-
-- (void)applicationDidBecomeActive:(UIApplication *)application
-{
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-}
-
-- (void)applicationWillTerminate:(UIApplication *)application
-{
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 @end

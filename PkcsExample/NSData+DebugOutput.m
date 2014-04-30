@@ -23,11 +23,38 @@
 // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 // SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-#import "WJLAppDelegate.h"
+#import "NSData+DebugOutput.h"
 
-int main(int argc, char * argv[])
+@implementation NSData (DebugOutput)
+
+- (NSString *)debugOutput
 {
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([WJLAppDelegate class]));
+    int rowlength = 16;
+    const uint8_t *data = [self bytes];
+    NSMutableString *str = [NSMutableString new];
+    for (NSInteger i = 0; i < (NSInteger) [self length]; ) {
+        [str appendFormat:@"\n"];
+        for (NSInteger j = 0; j < rowlength; j++, i++) {
+            if (i >= (NSInteger) [self length] || i < 0) {
+                [str appendString:@"  "];
+            } else {
+                [str appendFormat:@"%02x", data[i]];
+            }
+            if (i % 2) [str appendString:@" "];
+        }
+        i -= rowlength;
+        [str appendString:@" "];
+        for (NSInteger j = 0; j < rowlength; j++, i++) {
+            if (i >= (NSInteger) [self length] || i < 0) {
+                [str appendString:@" "];
+            } else if (data[i] < 33 || data[i] > '~') {
+                [str appendString:@"."];
+            } else {
+                [str appendFormat:@"%c", data[i]];
+            }
+        }
     }
+    return str;
 }
+
+@end
